@@ -215,7 +215,19 @@ const App = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
+  const [target,setTarget]=useState('')
+ const [form, setForm] = useState({
+  firstName: "", email: "", age: "",
+});
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setForm((prev) => ({ ...prev, [name]: value }));
+};
+const display=(e)=>{
+        e.preventDefault();
+        setSubmit(true);
+    }
+    const[isdisplay,setSubmit]=useState(false)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -249,12 +261,36 @@ const App = () => {
   if (error) {
     return <h2 className="status">{error}</h2>;
   }
-
   return (
     <div className="app">
-      <h1 className="heading">Product Store</h1>
-      <p className="subtitle">Explore our products</p>
+  {/* <input value={target} onChange={(e)=>setTarget(e.target.value)}></input>
+      <label>{target}</label> */}
+     
 
+ 
+<input name="firstName" value={form.firstName}
+       onChange={handleChange} />
+<input name="email" value={form.email}
+       onChange={handleChange} />
+    
+<input name="age" value={form.age} onChange={handleChange}></input>
+<button onClick={display}>Submit</button>
+ {isdisplay && (
+                <>
+          <h3>Submitted Details</h3>
+          <label>Name: {form.firstName}</label>
+          <br />
+          <label>Email: {form.email}</label>
+          <br />
+          <label>Age: {form.age}</label>
+        </>
+            )}
+  
+
+
+
+  <h1 className="heading">Product Store</h1>
+      <p className="subtitle">Explore our products</p>
       <div className="product-grid">
         {products.map((item) => (
           <div className="product-card" key={item.id}>
